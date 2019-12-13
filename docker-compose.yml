@@ -1,0 +1,62 @@
+version: '3'
+services:
+
+  #PHP Service
+  ypg-api:
+    build: .docker/php
+    container_name: ypg-api
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: ypg-api
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./api:/var/www
+      - .docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - ypg-api-network
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./api:/var/www
+      - .docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - ypg-api-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ypg_api
+      MYSQL_ROOT_PASSWORD: 613984
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - ypg-api-network
+
+#Docker Networks
+networks:
+  ypg-api-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
