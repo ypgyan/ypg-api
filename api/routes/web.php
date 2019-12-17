@@ -23,7 +23,7 @@ $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function() use 
     $router->get('logs', ['uses'=>'LogViewerController@index', 'name' => 'logs']);
 });
 
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'persons'], function () use ($router) {
         $router->get('/', ['uses'=>'\Src\Persons\Controllers\IndexController@index', 'name'=>'persons.index']);
     });
