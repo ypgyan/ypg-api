@@ -61,12 +61,13 @@ $app->singleton(
 //     App\Http\Middleware\ExampleMiddleware::class
 //]);
 
-//$app->middleware([
-//    'watchman' => App\Http\Middleware\Watchman::class, 
-//]);
 
+/**
+ * Register middlewares para rotas
+ */
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'watchman' => App\Http\Middleware\Watchman::class
 ]);
 
 /*
