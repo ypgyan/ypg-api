@@ -1,3 +1,6 @@
 # YPG API
 
-Projeto em laravel Lumen para aprendizado em criação de APIs REST.
+Projeto utilizando:
+- Docker
+- Laravel Lumen
+- Swoole
