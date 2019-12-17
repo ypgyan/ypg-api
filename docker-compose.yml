@@ -6,29 +6,16 @@ services:
     build: .docker/php
     container_name: ypg-api
     restart: unless-stopped
-    tty: true
+    ports:
+      - "3000:3000"
     environment:
+#      XDEBUG_CONFIG: "remote_host=172.17.0.1 remote_enable=1"
       SERVICE_NAME: ypg-api
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
       - ./api:/var/www
       - .docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - ypg-api-network
-
-  #Nginx Service
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "8080:80"
-      - "443:443"
-    volumes:
-      - ./api:/var/www
-      - .docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - ypg-api-network
 
@@ -47,7 +34,6 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql
-      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - ypg-api-network
 

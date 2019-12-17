@@ -35,9 +35,20 @@ RUN set -ex \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install XDebug
+#RUN apk add --no-cache \
+#    && pecl install xdebug \
+#    && docker-php-ext-enable xdebug
+
+# ADD user www
 RUN ln -s /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
     && adduser -D -g 'www' www \
     && chown -R www:www /var/www
+
+# Install Swoole
+RUN apk add --no-cache \
+    && pecl install swoole \
+    && docker-php-ext-enable swoole
 
 # Copy existing application directory contents
 COPY . /var/www

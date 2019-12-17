@@ -18,3 +18,11 @@ $router->get('/', function () use ($router) {
 $router->get('/key', function() {
     return \Illuminate\Support\Str::random(32);
 });
+
+$router->group(['prefix' => 'persons'], function () use ($router) {
+    $router->get('/', ['uses'=>'\Src\Persons\Controllers\IndexController@index', 'name'=>'persons.index']);
+});
+
+$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function() use ($router) {
+    $router->get('logs', ['uses'=>'LogViewerController@index', 'name' => 'logs']);
+});
