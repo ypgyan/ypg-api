@@ -6,7 +6,7 @@ Projeto utilizando:
 - Swoole
 
 Levantando o servidor:
-php:
+Php:
 - php -S 0.0.0.0:3000 -t public
 
 Swoole:
