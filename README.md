@@ -5,7 +5,8 @@ Projeto utilizando:
 - Laravel Lumen
 - Swoole
 
-Levantando o servidor:
+Levantando o servidor
+
 Php:
 - php -S 0.0.0.0:3000 -t public
 
